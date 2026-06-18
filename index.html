@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tic-Tac-Toe AI Setup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="setup-page">
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">XO</div>
+        <div>
+          <p class="eyebrow"><span>Strategy game</span></p>
+          <h1>Tic-Tac-Toe</h1>
+        </div>
+      </div>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme">☾</button>
+    </header>
+
+    <main class="hero-grid">
+      <section class="hero-copy glass-card">
+        <p class="kicker">Unbeatable opponent</p>
+        <div class="headline-card">
+          <h2>Configure the match, then step into a focused battle against an unbeatable AI.</h2>
+        </div>
+        <p class="hero-subline">Challenge an unbeatable AI built with Minimax and Alpha-Beta pruning.</p>
+        <p class="lead">
+          Choose your symbol, decide who plays first, and launch a premium Tic-Tac-Toe experience powered by optimal move selection, clean game states, and a focused interface.
+        </p>
+
+        <div class="feature-grid">
+          <article class="mini-card">
+            <span>Perfect play</span>
+            <strong>The AI always chooses the optimal move.</strong>
+          </article>
+
+          <article class="mini-card">
+            <span>Smart preview</span>
+            <strong>See your symbol, AI symbol, and first turn before the match begins.</strong>
+          </article>
+
+          <article class="mini-card">
+            <span>Fast decisions</span>
+            <strong>Alpha-Beta pruning reduces extra search and keeps AI responses smooth.</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="setup-panel glass-card">
+        <div class="panel-head">
+          <p class="panel-label">Match setup</p>
+          <h3>Configure your game</h3>
+        </div>
+
+        <form id="setupForm" class="setup-form">
+          <label class="field">
+            <span>Your symbol</span>
+            <select id="playerSymbol" name="symbol">
+              <option value="X">X</option>
+              <option value="O">O</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Who plays first</span>
+            <select id="firstTurn" name="firstTurn">
+              <option value="human">Human</option>
+              <option value="ai">AI</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Player name</span>
+            <input id="playerName" name="playerName" type="text" maxlength="20" placeholder="Enter your name" value="Player" />
+          </label>
+
+          <div class="preview-card">
+            <p>Preview</p>
+            <div class="preview-row"><span>Human</span><strong id="previewHuman">X</strong></div>
+            <div class="preview-row"><span>AI</span><strong id="previewAi">O</strong></div>
+            <div class="preview-row"><span>First move</span><strong id="previewTurn">Human</strong></div>
+          </div>
+
+          <button class="primary-btn" type="submit">Start Game</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>Created by <span>Xplok</span> <span class="footer-separator">•</span> Tic-Tac-Toe AI</p>
+    </footer>
+  </div>
+
+  <script>
+    const symbolSelect = document.getElementById('playerSymbol');
+    const firstTurnSelect = document.getElementById('firstTurn');
+    const previewHuman = document.getElementById('previewHuman');
+    const previewAi = document.getElementById('previewAi');
+    const previewTurn = document.getElementById('previewTurn');
+    const setupForm = document.getElementById('setupForm');
+    const themeToggle = document.getElementById('themeToggle');
+
+    function syncPreview() {
+      const human = symbolSelect.value;
+      previewHuman.textContent = human;
+      previewAi.textContent = human === 'X' ? 'O' : 'X';
+      previewTurn.textContent = firstTurnSelect.value === 'human' ? 'Human' : 'AI';
+    }
+
+    function updateThemeIcon(theme) {
+      themeToggle.textContent = theme === 'dark' ? '☾' : '☀';
+    }
+
+    function initTheme() {
+      const saved = sessionStorage.getItem('ttt-theme');
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (systemDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+      updateThemeIcon(theme);
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      sessionStorage.setItem('ttt-theme', next);
+      updateThemeIcon(next);
+    });
+
+    symbolSelect.addEventListener('change', syncPreview);
+    firstTurnSelect.addEventListener('change', syncPreview);
+
+    setupForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const playerName = document.getElementById('playerName').value.trim() || 'Player';
+      const params = new URLSearchParams({
+        symbol: symbolSelect.value,
+        firstTurn: firstTurnSelect.value,
+        playerName
+      });
+      window.location.href = `game.html?${params.toString()}`;
+    });
+
+    initTheme();
+    syncPreview();
+  </script>
+</body>
+</html>

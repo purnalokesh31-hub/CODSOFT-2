@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tic-Tac-Toe AI Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="game-page">
+  <div class="page-shell">
+    <header class="topbar compact">
+      <div class="brand">
+        <div class="brand-mark">XO</div>
+        <div>
+          <p class="eyebrow">Live match</p>
+          <h1>Tic-Tac-Toe AI</h1>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="ghost-btn" type="button" onclick="window.location.href='index.html'">New Setup</button>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme">☾</button>
+      </div>
+    </header>
+
+    <main class="game-layout">
+      <aside class="side-panel glass-card">
+        <div class="panel-head">
+          <p class="panel-label">Match summary</p>
+        </div>
+
+        <div class="summary-block">
+          <span>Human</span>
+          <strong id="humanName">Player</strong>
+          <b id="humanSymbolLabel">X</b>
+        </div>
+
+        <div class="summary-block">
+          <span>AI</span>
+          <strong>Strategic Engine</strong>
+          <b id="aiSymbolLabel">O</b>
+        </div>
+
+        <div class="summary-block accent">
+          <span>First turn</span>
+          <strong id="firstTurnLabel">Human</strong>
+          <b>Ready</b>
+        </div>
+
+        <div class="info-stack">
+          <article>
+            <span>Status</span>
+            <strong id="statusText">Preparing match...</strong>
+          </article>
+          <article>
+            <span>Round</span>
+            <strong id="roundText">1</strong>
+          </article>
+        </div>
+      </aside>
+
+      <section class="board-panel glass-card">
+        <div class="board-head">
+          <p class="panel-label">Game board</p>
+          <button class="primary-btn small" id="restartBtn" type="button">Restart Round</button>
+        </div>
+
+        <div class="status-banner" id="message" aria-live="polite">Loading your game...</div>
+
+        <div class="board" id="board" role="grid" aria-label="Tic Tac Toe board"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
